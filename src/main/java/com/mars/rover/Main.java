@@ -12,7 +12,5 @@ public class Main {
     }
 
     private Main() {
-        throw new AssertionError(
-                "Suppress default constructor for non-instantiability");
     }
 }
