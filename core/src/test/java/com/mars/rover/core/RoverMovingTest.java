@@ -224,7 +224,7 @@ class RoverMovingTest {
         var movedRover = rover.receive(command);
 
         assertThat(movedRover).isNotNull();
-        assertThat(movedRover.getDirection()).isEqualTo(direction);
-        assertThat(movedRover.getLocation()).isEqualTo(expectedLocation);
+        assertThat(movedRover.direction()).isEqualTo(direction);
+        assertThat(movedRover.location()).isEqualTo(expectedLocation);
     }
 }

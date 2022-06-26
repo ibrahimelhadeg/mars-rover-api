@@ -28,7 +28,7 @@ public enum Command {
     static {
         var mutableCommandMap = new HashMap<Character, Command>();
         for (var command : values()) {
-            mutableCommandMap.put(command.getCode(), command);
+            mutableCommandMap.put(command.code(), command);
         }
         COMMAND_TO_DIRECTION = unmodifiableMap(mutableCommandMap);
     }

@@ -1,17 +1,17 @@
 package com.mars.rover.core;
 
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NonNull;
-import lombok.Value;
 
-@Value
+@Getter
 @Builder(setterPrefix = "with", toBuilder = true)
 public class Rover {
 
     @NonNull Location location;
     @NonNull Direction direction;
 
-    public Rover receive(Command command) {
+    public Rover receive(@NonNull Command command) {
         return switch (command) {
             case LEFT -> turnLeft();
             case RIGHT -> turnRight();

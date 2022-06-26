@@ -2,6 +2,7 @@ package com.mars.rover.core;
 
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -12,6 +13,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import static org.mockito.Mockito.lenient;
 
 import static com.mars.rover.core.Location.*;
@@ -21,6 +24,38 @@ class RoverReceivingCommandTest {
 
     @Mock
     private Location mockedLocation;
+
+    @Test
+    void should_reject_null_command() {
+        var rover = Rover.builder()
+                .withLocation(mockedLocation)
+                .withDirection(Direction.EST)
+                .build();
+
+        var thrown = assertThrows(
+                Exception.class,
+                () -> rover.receive(null),
+                "An Exception was expected");
+
+        assertThat(thrown.getMessage())
+                .isEqualTo("command is marked non-null but is null");
+    }
+
+    @Test
+    void should_reject_unknown_command() {
+        var rover = Rover.builder()
+                .withLocation(mockedLocation)
+                .withDirection(Direction.EST)
+                .build();
+
+        var thrown = assertThrows(
+                Exception.class,
+                () -> rover.receive(Command.valueOf("")),
+                "An Exception was expected");
+
+        assertThat(thrown.getMessage())
+                .isEqualTo("No enum constant " + Command.class.getCanonicalName() + ".");
+    }
 
     @ParameterizedTest
     @MethodSource({"movingCases", "movingForwardEdgeCases", "movingBackwardEdgeCases"})
@@ -41,8 +76,8 @@ class RoverReceivingCommandTest {
         var movedRover = rover.receive(command);
 
         assertThat(movedRover).isNotNull();
-        assertThat(movedRover.getDirection()).isEqualTo(direction);
-        assertThat(movedRover.getLocation()).isEqualTo(expectedLocation);
+        assertThat(movedRover.direction()).isEqualTo(direction);
+        assertThat(movedRover.location()).isEqualTo(expectedLocation);
     }
 
     private static Stream<Arguments> movingCases() {

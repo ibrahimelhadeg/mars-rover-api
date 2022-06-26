@@ -55,9 +55,9 @@ class RoverTurningTest {
         var turnedRover = rover.receive(command);
 
         assertThat(turnedRover).isNotNull();
-        assertThat(turnedRover.getLocation())
-                .isEqualTo(rover.getLocation());
-        assertThat(turnedRover.getDirection())
+        assertThat(turnedRover.location())
+                .isEqualTo(rover.location());
+        assertThat(turnedRover.direction())
                 .isEqualTo(expectedDirection);
     }
 }
