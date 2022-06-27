@@ -1,8 +1,15 @@
 package com.mars.rover.core;
 
-import lombok.Builder;
-import lombok.NonNull;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
+@Getter
+@ToString
+@EqualsAndHashCode
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder(setterPrefix = "with", toBuilder = true)
-public record Obstacle(@NonNull Location location) {
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+public class Obstacle {
+
+    @NonNull Location location;
 }

@@ -9,16 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class ObstacleCreationTest {
 
     @Test
-    void should_construct_obstacle() {
-        Location inputLocation = Location.builder().build();
-
-        Obstacle obstacle = new Obstacle(inputLocation);
-
-        assertThat(obstacle).isNotNull();
-        assertThat(obstacle.location()).isEqualTo(inputLocation);
-    }
-
-    @Test
     void should_create_obstacle() {
         Location inputLocation = Location.builder().build();
 

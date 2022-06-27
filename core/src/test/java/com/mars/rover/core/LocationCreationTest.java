@@ -32,12 +32,10 @@ class LocationCreationTest {
     }
 
     private void should_not_create_location_with_x_out_of_range(int x) {
+        var locationBuilder = Location.builder().withX(x).withY(5);
         var thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> Location.builder()
-                        .withX(x)
-                        .withY(5)
-                        .build(),
+                locationBuilder::build,
                 IllegalArgumentException.class.getSimpleName() + " was expected");
 
         assertThat(thrown.getMessage())
@@ -55,12 +53,10 @@ class LocationCreationTest {
     }
 
     private void should_not_create_location_with_y_out_of_range(int y) {
+        var locationBuilder = Location.builder().withX(-5).withY(y);
         var thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> Location.builder()
-                        .withX(-5)
-                        .withY(y)
-                        .build(),
+                locationBuilder::build,
                 IllegalArgumentException.class.getSimpleName() + " was expected");
 
         assertThat(thrown.getMessage())

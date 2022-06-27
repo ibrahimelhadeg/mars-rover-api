@@ -19,7 +19,7 @@ import static org.mockito.Mockito.lenient;
 import static com.mars.rover.core.Location.*;
 
 @ExtendWith(MockitoExtension.class)
-class RoverReceivingCommandTest {
+class RoverExecutingCommandTest {
 
     @Mock
     private Location mockedLocation;
@@ -33,7 +33,7 @@ class RoverReceivingCommandTest {
 
         var thrown = assertThrows(
                 Exception.class,
-                () -> rover.receive(null),
+                () -> rover.execute(null),
                 "An Exception was expected");
 
         assertThat(thrown.getMessage())
@@ -49,7 +49,7 @@ class RoverReceivingCommandTest {
 
         var thrown = assertThrows(
                 Exception.class,
-                () -> rover.receive(Command.valueOf("")),
+                () -> rover.execute(Command.valueOf("")),
                 "An Exception was expected");
 
         assertThat(thrown.getMessage())
@@ -254,7 +254,7 @@ class RoverReceivingCommandTest {
                 .withDirection(testCase.direction())
                 .build();
 
-        var movedRover = rover.receive(testCase.command());
+        var movedRover = rover.execute(testCase.command());
 
         assertThat(movedRover).isNotNull();
         assertThat(movedRover.direction()).isEqualTo(testCase.direction());

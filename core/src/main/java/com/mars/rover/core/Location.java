@@ -2,15 +2,24 @@ package com.mars.rover.core;
 
 import java.text.MessageFormat;
 
-import lombok.Builder;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
+@Getter
+@ToString
+@EqualsAndHashCode
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder(setterPrefix = "with", toBuilder = true)
-public record Location(int x, int y) {
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+public class Location {
 
     public static final int X_UPPER_BOUNDARY = 5;
     public static final int X_LOWER_BOUNDARY = -5;
     public static final int Y_UPPER_BOUNDARY = 5;
     public static final int Y_LOWER_BOUNDARY = -5;
+
+    int x;
+    int y;
 
     public Location increaseX() {
         var newX = (x == X_UPPER_BOUNDARY) ? X_LOWER_BOUNDARY : increase(x);

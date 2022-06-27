@@ -217,7 +217,7 @@ class RoverMovingTest {
                 .withDirection(testCase.direction())
                 .build();
 
-        var movedRover = rover.receive(testCase.command());
+        var movedRover = rover.execute(testCase.command());
 
         assertThat(movedRover).isNotNull();
         assertThat(movedRover.direction()).isEqualTo(testCase.direction());

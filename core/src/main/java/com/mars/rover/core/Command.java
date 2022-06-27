@@ -1,16 +1,15 @@
 package com.mars.rover.core;
 
 import java.text.MessageFormat;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
-
-import static java.util.Collections.unmodifiableMap;
 
 @Getter
 @ToString
@@ -23,15 +22,11 @@ public enum Command {
     BACKWARD('B'),
     FORWARD('F');
 
-    private static final Map<Character, Command> COMMAND_TO_DIRECTION;
-
-    static {
-        var mutableCommandMap = new HashMap<Character, Command>();
-        for (var command : values()) {
-            mutableCommandMap.put(command.code(), command);
-        }
-        COMMAND_TO_DIRECTION = unmodifiableMap(mutableCommandMap);
-    }
+    private static final Map<Character, Command> COMMAND_TO_DIRECTION =
+            Arrays.stream(values())
+                    .collect(Collectors.toUnmodifiableMap(
+                            Command::code,
+                            command -> command));
 
     private final char code;
 

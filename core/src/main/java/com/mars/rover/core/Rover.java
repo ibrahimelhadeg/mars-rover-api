@@ -1,17 +1,20 @@
 package com.mars.rover.core;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NonNull;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Getter
+@ToString
+@EqualsAndHashCode
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder(setterPrefix = "with", toBuilder = true)
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class Rover {
 
     @NonNull Location location;
     @NonNull Direction direction;
 
-    public Rover receive(@NonNull Command command) {
+    public Rover execute(@NonNull Command command) {
         return switch (command) {
             case LEFT -> turnLeft();
             case RIGHT -> turnRight();

@@ -14,6 +14,14 @@ import static com.mars.rover.core.Command.*;
 
 class CommandDecodingTest {
 
+    @ParameterizedTest
+    @MethodSource("allowedCommands")
+    void test_decoding_set_of_command(AllowedTestCase testCase) {
+        var command = Command.ofCodes(testCase.commandCodes());
+
+        assertThat(command).isEqualTo(testCase.expectedCommands());
+    }
+
     private static Stream<AllowedTestCase> allowedCommands() {
         return Stream.of(
                 new AllowedTestCase(
@@ -36,19 +44,11 @@ class CommandDecodingTest {
     }
 
     @ParameterizedTest
-    @MethodSource("allowedCommands")
-    void test_decoding_set_of_command(AllowedTestCase testCase) {
-        var command = Command.ofCodes(testCase.commandCodes());
-
-        assertThat(command).isEqualTo(testCase.expectedCommands());
-    }
-
-    @ParameterizedTest
     @MethodSource("nonAllowedCommands")
     void test_failed_decoding_command(NonAllowedTestCase testCase) {
         var thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> Command.ofCodes(testCase.commandCodesInput()),
+                () -> Command.ofCodes(testCase.commandCodesInput),
                 "An" + IllegalArgumentException.class.getSimpleName() + " was expected");
 
         assertThat(thrown.getMessage())

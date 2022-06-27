@@ -41,7 +41,7 @@ class RoverTurningTest {
                 .withDirection(testCase.initialDirection())
                 .build();
 
-        var turnedRover = rover.receive(testCase.command());
+        var turnedRover = rover.execute(testCase.command());
 
         assertThat(turnedRover).isNotNull();
         assertThat(turnedRover.location())
