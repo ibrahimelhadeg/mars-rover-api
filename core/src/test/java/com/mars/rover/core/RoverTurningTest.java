@@ -2,29 +2,29 @@ package com.mars.rover.core;
 
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ExtendWith(MockitoExtension.class)
 class RoverTurningTest {
 
-    private Location testLocation;
-
-    @BeforeEach
-    void prepare_test_location() {
-        testLocation = Location.builder()
-                .withX(0)
-                .withY(0)
-                .build();
-    }
+    @Mock
+    private Grid mockedGrid;
+    @Mock
+    private Location mockedLocation;
 
     @ParameterizedTest
     @MethodSource("turningCases")
     void test_turning_situation(TestCase testCase) {
         var rover = Rover.builder()
-                .withLocation(testLocation)
+                .withGrid(mockedGrid)
+                .withLocation(mockedLocation)
                 .withDirection(testCase.initialDirection())
                 .build();
 

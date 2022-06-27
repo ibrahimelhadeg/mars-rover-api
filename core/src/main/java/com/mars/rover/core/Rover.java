@@ -11,6 +11,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class Rover {
 
+    @NonNull Grid grid;
     @NonNull Location location;
     @NonNull Direction direction;
 
@@ -58,20 +59,31 @@ public class Rover {
     }
 
     private Rover moveForward() {
-        return switch (direction) {
-            case EST -> toBuilder()
-                    .withLocation(location.increaseX())
-                    .build();
-            case NORTH -> toBuilder()
-                    .withLocation(location.increaseY())
-                    .build();
-            case SOUTH -> toBuilder()
-                    .withLocation(location.decreaseY())
-                    .build();
-            case WEST -> toBuilder()
-                    .withLocation(location.decreaseX())
-                    .build();
+        var nextLocation = switch (direction) {
+            case EST -> location.increaseX();
+            case NORTH -> location.increaseY();
+            case SOUTH -> location.decreaseY();
+            case WEST -> location.decreaseX();
         };
+
+        if (!grid.isFree(nextLocation)) {
+            return this;
+        } else {
+            return switch (direction) {
+                case EST -> toBuilder()
+                        .withLocation(location.increaseX())
+                        .build();
+                case NORTH -> toBuilder()
+                        .withLocation(location.increaseY())
+                        .build();
+                case SOUTH -> toBuilder()
+                        .withLocation(location.decreaseY())
+                        .build();
+                case WEST -> toBuilder()
+                        .withLocation(location.decreaseX())
+                        .build();
+            };
+        }
     }
 
     private Rover moveBackward() {

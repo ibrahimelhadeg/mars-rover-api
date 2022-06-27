@@ -1,5 +1,7 @@
 package com.mars.rover.core;
 
+import java.util.Set;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -9,7 +11,11 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder(setterPrefix = "with", toBuilder = true)
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-public class Obstacle {
+public class Grid {
 
-    @NonNull Location location;
+    @NonNull Set<Location> obstacles;
+
+    public boolean isFree(Location location) {
+        return !obstacles.contains(location);
+    }
 }
