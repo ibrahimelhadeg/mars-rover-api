@@ -5,7 +5,6 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import org.mockito.Mock;
@@ -57,69 +56,46 @@ class RoverReceivingCommandTest {
                 .isEqualTo("No enum constant " + Command.class.getCanonicalName() + ".");
     }
 
-    @ParameterizedTest
-    @MethodSource({"movingCases", "movingForwardEdgeCases", "movingBackwardEdgeCases"})
-    void test_moving_situation(Location initialLocation,
-                               Direction direction,
-                               Location expectedLocation,
-                               Command command) {
-        lenient().when(mockedLocation.increaseX()).thenReturn(expectedLocation);
-        lenient().when(mockedLocation.increaseY()).thenReturn(expectedLocation);
-        lenient().when(mockedLocation.decreaseX()).thenReturn(expectedLocation);
-        lenient().when(mockedLocation.decreaseY()).thenReturn(expectedLocation);
-
-        var rover = Rover.builder()
-                .withLocation(initialLocation)
-                .withDirection(direction)
-                .build();
-
-        var movedRover = rover.receive(command);
-
-        assertThat(movedRover).isNotNull();
-        assertThat(movedRover.direction()).isEqualTo(direction);
-        assertThat(movedRover.location()).isEqualTo(expectedLocation);
-    }
-
-    private static Stream<Arguments> movingCases() {
+    private static Stream<TestCase> movingCases() {
         return Stream.of(
 
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(0).withY(0).build(),
                         Direction.EST,
                         Location.builder().withX(1).withY(0).build(),
                         Command.FORWARD),
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(0).withY(0).build(),
                         Direction.NORTH,
                         Location.builder().withX(0).withY(1).build(),
                         Command.FORWARD),
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(0).withY(0).build(),
                         Direction.SOUTH,
                         Location.builder().withX(0).withY(-1).build(),
                         Command.FORWARD),
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(0).withY(0).build(),
                         Direction.WEST,
                         Location.builder().withX(-1).withY(0).build(),
                         Command.FORWARD),
 
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(0).withY(0).build(),
                         Direction.EST,
                         Location.builder().withX(-1).withY(0).build(),
                         Command.BACKWARD),
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(0).withY(0).build(),
                         Direction.NORTH,
                         Location.builder().withX(0).withY(-1).build(),
                         Command.BACKWARD),
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(0).withY(0).build(),
                         Direction.SOUTH,
                         Location.builder().withX(0).withY(1).build(),
                         Command.BACKWARD),
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(0).withY(0).build(),
                         Direction.WEST,
                         Location.builder().withX(1).withY(0).build(),
@@ -127,68 +103,68 @@ class RoverReceivingCommandTest {
         );
     }
 
-    private static Stream<Arguments> movingForwardEdgeCases() {
+    private static Stream<TestCase> movingForwardEdgeCases() {
         return Stream.of(
 
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(X_UPPER_BOUNDARY).withY(0).build(),
                         Direction.EST,
                         Location.builder().withX(X_LOWER_BOUNDARY).withY(0).build(),
                         Command.FORWARD),
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(X_UPPER_BOUNDARY).withY(Y_LOWER_BOUNDARY).build(),
                         Direction.EST,
                         Location.builder().withX(X_LOWER_BOUNDARY).withY(Y_LOWER_BOUNDARY).build(),
                         Command.FORWARD),
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(X_UPPER_BOUNDARY).withY(Y_UPPER_BOUNDARY).build(),
                         Direction.EST,
                         Location.builder().withX(X_LOWER_BOUNDARY).withY(Y_UPPER_BOUNDARY).build(),
                         Command.FORWARD),
 
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(0).withY(Y_UPPER_BOUNDARY).build(),
                         Direction.NORTH,
                         Location.builder().withX(0).withY(Y_LOWER_BOUNDARY).build(),
                         Command.FORWARD),
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(X_LOWER_BOUNDARY).withY(Y_UPPER_BOUNDARY).build(),
                         Direction.NORTH,
                         Location.builder().withX(X_LOWER_BOUNDARY).withY(Y_LOWER_BOUNDARY).build(),
                         Command.FORWARD),
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(X_UPPER_BOUNDARY).withY(Y_UPPER_BOUNDARY).build(),
                         Direction.NORTH,
                         Location.builder().withX(X_UPPER_BOUNDARY).withY(Y_LOWER_BOUNDARY).build(),
                         Command.FORWARD),
 
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(0).withY(Y_LOWER_BOUNDARY).build(),
                         Direction.SOUTH,
                         Location.builder().withX(0).withY(Y_UPPER_BOUNDARY).build(),
                         Command.FORWARD),
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(X_LOWER_BOUNDARY).withY(Y_LOWER_BOUNDARY).build(),
                         Direction.SOUTH,
                         Location.builder().withX(X_LOWER_BOUNDARY).withY(Y_UPPER_BOUNDARY).build(),
                         Command.FORWARD),
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(X_UPPER_BOUNDARY).withY(Y_LOWER_BOUNDARY).build(),
                         Direction.SOUTH,
                         Location.builder().withX(X_UPPER_BOUNDARY).withY(Y_UPPER_BOUNDARY).build(),
                         Command.FORWARD),
 
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(X_LOWER_BOUNDARY).withY(0).build(),
                         Direction.WEST,
                         Location.builder().withX(X_UPPER_BOUNDARY).withY(0).build(),
                         Command.FORWARD),
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(X_LOWER_BOUNDARY).withY(Y_LOWER_BOUNDARY).build(),
                         Direction.WEST,
                         Location.builder().withX(X_UPPER_BOUNDARY).withY(Y_LOWER_BOUNDARY).build(),
                         Command.FORWARD),
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(X_LOWER_BOUNDARY).withY(Y_UPPER_BOUNDARY).build(),
                         Direction.WEST,
                         Location.builder().withX(X_UPPER_BOUNDARY).withY(Y_UPPER_BOUNDARY).build(),
@@ -196,72 +172,98 @@ class RoverReceivingCommandTest {
         );
     }
 
-    private static Stream<Arguments> movingBackwardEdgeCases() {
+    private static Stream<TestCase> movingBackwardEdgeCases() {
         return Stream.of(
 
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(X_LOWER_BOUNDARY).withY(0).build(),
                         Direction.EST,
                         Location.builder().withX(X_UPPER_BOUNDARY).withY(0).build(),
                         Command.BACKWARD),
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(X_LOWER_BOUNDARY).withY(Y_LOWER_BOUNDARY).build(),
                         Direction.EST,
                         Location.builder().withX(X_UPPER_BOUNDARY).withY(Y_LOWER_BOUNDARY).build(),
                         Command.BACKWARD),
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(X_LOWER_BOUNDARY).withY(Y_UPPER_BOUNDARY).build(),
                         Direction.EST,
                         Location.builder().withX(X_UPPER_BOUNDARY).withY(Y_UPPER_BOUNDARY).build(),
                         Command.BACKWARD),
 
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(0).withY(Y_LOWER_BOUNDARY).build(),
                         Direction.NORTH,
                         Location.builder().withX(0).withY(Y_UPPER_BOUNDARY).build(),
                         Command.BACKWARD),
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(X_LOWER_BOUNDARY).withY(Y_LOWER_BOUNDARY).build(),
                         Direction.NORTH,
                         Location.builder().withX(X_LOWER_BOUNDARY).withY(Y_UPPER_BOUNDARY).build(),
                         Command.BACKWARD),
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(X_UPPER_BOUNDARY).withY(Y_LOWER_BOUNDARY).build(),
                         Direction.NORTH,
                         Location.builder().withX(X_UPPER_BOUNDARY).withY(Y_UPPER_BOUNDARY).build(),
                         Command.BACKWARD),
 
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(0).withY(Y_UPPER_BOUNDARY).build(),
                         Direction.SOUTH,
                         Location.builder().withX(0).withY(Y_LOWER_BOUNDARY).build(),
                         Command.BACKWARD),
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(X_LOWER_BOUNDARY).withY(Y_UPPER_BOUNDARY).build(),
                         Direction.SOUTH,
                         Location.builder().withX(X_LOWER_BOUNDARY).withY(Y_LOWER_BOUNDARY).build(),
                         Command.BACKWARD),
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(X_UPPER_BOUNDARY).withY(Y_UPPER_BOUNDARY).build(),
                         Direction.SOUTH,
                         Location.builder().withX(X_UPPER_BOUNDARY).withY(Y_LOWER_BOUNDARY).build(),
                         Command.BACKWARD),
 
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(X_UPPER_BOUNDARY).withY(0).build(),
                         Direction.WEST,
                         Location.builder().withX(X_LOWER_BOUNDARY).withY(0).build(),
                         Command.BACKWARD),
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(X_UPPER_BOUNDARY).withY(Y_LOWER_BOUNDARY).build(),
                         Direction.WEST,
                         Location.builder().withX(X_LOWER_BOUNDARY).withY(Y_LOWER_BOUNDARY).build(),
                         Command.BACKWARD),
-                Arguments.of(
+                new TestCase(
                         Location.builder().withX(X_UPPER_BOUNDARY).withY(Y_UPPER_BOUNDARY).build(),
                         Direction.WEST,
                         Location.builder().withX(X_LOWER_BOUNDARY).withY(Y_UPPER_BOUNDARY).build(),
                         Command.BACKWARD)
         );
+    }
+
+    @ParameterizedTest
+    @MethodSource({"movingCases", "movingForwardEdgeCases", "movingBackwardEdgeCases"})
+    void test_moving_situation(TestCase testCase) {
+        lenient().when(mockedLocation.increaseX()).thenReturn(testCase.expectedLocation());
+        lenient().when(mockedLocation.increaseY()).thenReturn(testCase.expectedLocation());
+        lenient().when(mockedLocation.decreaseX()).thenReturn(testCase.expectedLocation());
+        lenient().when(mockedLocation.decreaseY()).thenReturn(testCase.expectedLocation());
+
+        var rover = Rover.builder()
+                .withLocation(testCase.initialLocation())
+                .withDirection(testCase.direction())
+                .build();
+
+        var movedRover = rover.receive(testCase.command());
+
+        assertThat(movedRover).isNotNull();
+        assertThat(movedRover.direction()).isEqualTo(testCase.direction());
+        assertThat(movedRover.location()).isEqualTo(testCase.expectedLocation());
+    }
+
+    private record TestCase(Location initialLocation,
+                            Direction direction,
+                            Location expectedLocation,
+                            Command command) {
     }
 }

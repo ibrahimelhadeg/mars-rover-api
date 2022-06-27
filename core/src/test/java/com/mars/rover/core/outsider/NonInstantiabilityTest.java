@@ -3,7 +3,6 @@ package com.mars.rover.core.outsider;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import com.mars.rover.core.Main;
@@ -15,19 +14,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class NonInstantiabilityTest {
 
-    private static Stream<Arguments> nonInstantiableClasses() {
+    private static Stream<TestCase> nonInstantiableClasses() {
         return Stream.of(
-                Arguments.of(Main.class),
-                Arguments.of(Rover.class)
+                new TestCase(Main.class),
+                new TestCase(Rover.class)
         );
     }
 
     @ParameterizedTest
     @MethodSource("nonInstantiableClasses")
-    void test_for_nonInstantiability(Class<?> clazz) {
-        var constructors = clazz.getDeclaredConstructors();
+    void test_for_nonInstantiability(TestCase testCase) {
+        var constructors = testCase.clazz().getDeclaredConstructors();
         for (var constructor : constructors) {
             assertThat(isPublic(constructor.getModifiers())).isFalse();
         }
+    }
+
+    private record TestCase(Class<?> clazz) {
     }
 }

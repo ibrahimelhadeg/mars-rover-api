@@ -4,7 +4,6 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -12,27 +11,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RoverTurningTest {
 
     private Location testLocation;
-
-    private static Stream<Arguments> turningCases() {
-        return Stream.of(
-                Arguments.of(
-                        Direction.NORTH, Direction.WEST, Command.LEFT),
-                Arguments.of(
-                        Direction.NORTH, Direction.EST, Command.RIGHT),
-                Arguments.of(
-                        Direction.SOUTH, Direction.EST, Command.LEFT),
-                Arguments.of(
-                        Direction.SOUTH, Direction.WEST, Command.RIGHT),
-                Arguments.of(
-                        Direction.WEST, Direction.SOUTH, Command.LEFT),
-                Arguments.of(
-                        Direction.WEST, Direction.NORTH, Command.RIGHT),
-                Arguments.of(
-                        Direction.EST, Direction.NORTH, Command.LEFT),
-                Arguments.of(
-                        Direction.EST, Direction.SOUTH, Command.RIGHT)
-        );
-    }
 
     @BeforeEach
     void prepare_test_location() {
@@ -42,22 +20,38 @@ class RoverTurningTest {
                 .build();
     }
 
+    private static Stream<TestCase> turningCases() {
+        return Stream.of(
+                new TestCase(Direction.NORTH, Direction.WEST, Command.LEFT),
+                new TestCase(Direction.NORTH, Direction.EST, Command.RIGHT),
+                new TestCase(Direction.SOUTH, Direction.EST, Command.LEFT),
+                new TestCase(Direction.SOUTH, Direction.WEST, Command.RIGHT),
+                new TestCase(Direction.WEST, Direction.SOUTH, Command.LEFT),
+                new TestCase(Direction.WEST, Direction.NORTH, Command.RIGHT),
+                new TestCase(Direction.EST, Direction.NORTH, Command.LEFT),
+                new TestCase(Direction.EST, Direction.SOUTH, Command.RIGHT)
+        );
+    }
+
     @ParameterizedTest
     @MethodSource("turningCases")
-    void test_turning_situation(Direction initialDirection,
-                                Direction expectedDirection,
-                                Command command) {
+    void test_turning_situation(TestCase testCase) {
         var rover = Rover.builder()
                 .withLocation(testLocation)
-                .withDirection(initialDirection)
+                .withDirection(testCase.initialDirection())
                 .build();
 
-        var turnedRover = rover.receive(command);
+        var turnedRover = rover.receive(testCase.command());
 
         assertThat(turnedRover).isNotNull();
         assertThat(turnedRover.location())
                 .isEqualTo(rover.location());
         assertThat(turnedRover.direction())
-                .isEqualTo(expectedDirection);
+                .isEqualTo(testCase.expectedDirection());
+    }
+
+    private record TestCase(Direction initialDirection,
+                            Direction expectedDirection,
+                            Command command) {
     }
 }

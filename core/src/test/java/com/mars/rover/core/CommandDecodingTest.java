@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,44 +14,52 @@ import static com.mars.rover.core.Command.*;
 
 class CommandDecodingTest {
 
-    private static Stream<Arguments> allowedCommands() {
+    private static Stream<AllowedTestCase> allowedCommands() {
         return Stream.of(
-                Arguments.of("FLFRB",
+                new AllowedTestCase(
+                        "FLFRB",
                         List.of(FORWARD, LEFT, FORWARD, RIGHT, BACKWARD)),
-                Arguments.of("RrRffFB",
+                new AllowedTestCase(
+                        "RrRffFB",
                         List.of(RIGHT, RIGHT, RIGHT, FORWARD, FORWARD, FORWARD, BACKWARD)),
-                Arguments.of("B",
-                        List.of(BACKWARD))
+                new AllowedTestCase(
+                        "B", List.of(BACKWARD))
         );
     }
 
-    private static Stream<Arguments> nonAllowedCommands() {
+    private static Stream<NonAllowedTestCase> nonAllowedCommands() {
         return Stream.of(
-                Arguments.of("XLFRB", "X"),
-                Arguments.of("R*RffFB", "*"),
-                Arguments.of("B\"BB", "\"")
+                new NonAllowedTestCase("XLFRB", "X"),
+                new NonAllowedTestCase("R*RffFB", "*"),
+                new NonAllowedTestCase("B\"BB", "\"")
         );
     }
 
     @ParameterizedTest
     @MethodSource("allowedCommands")
-    void test_decoding_set_of_command(String commandCodes,
-                                      List<Command> expectedCommands) {
-        var command = Command.ofCodes(commandCodes);
+    void test_decoding_set_of_command(AllowedTestCase testCase) {
+        var command = Command.ofCodes(testCase.commandCodes());
 
-        assertThat(command).isEqualTo(expectedCommands);
+        assertThat(command).isEqualTo(testCase.expectedCommands());
     }
 
-    @ParameterizedTest(name = "{index} \"{0}\" should FAIL because of \"{1}\"")
+    @ParameterizedTest
     @MethodSource("nonAllowedCommands")
-    void test_failed_decoding_command(String commandCodes,
-                                      String failingCommand) {
+    void test_failed_decoding_command(NonAllowedTestCase testCase) {
         var thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> Command.ofCodes(commandCodes),
+                () -> Command.ofCodes(testCase.commandCodesInput()),
                 "An" + IllegalArgumentException.class.getSimpleName() + " was expected");
 
         assertThat(thrown.getMessage())
-                .isEqualTo("\"" + failingCommand + "\" is not a known Command code");
+                .isEqualTo("\"" + testCase.failingCommand() + "\" is not a known Command code");
+    }
+
+    private record AllowedTestCase(String commandCodes,
+                                   List<Command> expectedCommands) {
+    }
+
+    private record NonAllowedTestCase(String commandCodesInput,
+                                      String failingCommand) {
     }
 }
