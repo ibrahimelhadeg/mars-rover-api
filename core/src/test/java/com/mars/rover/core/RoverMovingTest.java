@@ -19,6 +19,26 @@ class RoverMovingTest {
     @Mock
     private Location mockedLocation;
 
+    @ParameterizedTest
+    @MethodSource({"movingCases", "movingForwardEdgeCases", "movingBackwardEdgeCases"})
+    void test_moving_situation(TestCase testCase) {
+        lenient().when(mockedLocation.increaseX()).thenReturn(testCase.expectedLocation());
+        lenient().when(mockedLocation.increaseY()).thenReturn(testCase.expectedLocation());
+        lenient().when(mockedLocation.decreaseX()).thenReturn(testCase.expectedLocation());
+        lenient().when(mockedLocation.decreaseY()).thenReturn(testCase.expectedLocation());
+
+        var rover = Rover.builder()
+                .withLocation(testCase.initialLocation())
+                .withDirection(testCase.direction())
+                .build();
+
+        var movedRover = rover.execute(testCase.command());
+
+        assertThat(movedRover).isNotNull();
+        assertThat(movedRover.direction()).isEqualTo(testCase.direction());
+        assertThat(movedRover.location()).isEqualTo(testCase.expectedLocation());
+    }
+
     private static Stream<TestCase> movingCases() {
         return Stream.of(
 
@@ -202,26 +222,6 @@ class RoverMovingTest {
                         Location.builder().withX(Location.X_LOWER_BOUNDARY).withY(Location.Y_UPPER_BOUNDARY).build(),
                         Command.BACKWARD)
         );
-    }
-
-    @ParameterizedTest
-    @MethodSource({"movingCases", "movingForwardEdgeCases", "movingBackwardEdgeCases"})
-    void test_moving_situation(TestCase testCase) {
-        lenient().when(mockedLocation.increaseX()).thenReturn(testCase.expectedLocation());
-        lenient().when(mockedLocation.increaseY()).thenReturn(testCase.expectedLocation());
-        lenient().when(mockedLocation.decreaseX()).thenReturn(testCase.expectedLocation());
-        lenient().when(mockedLocation.decreaseY()).thenReturn(testCase.expectedLocation());
-
-        var rover = Rover.builder()
-                .withLocation(testCase.initialLocation())
-                .withDirection(testCase.direction())
-                .build();
-
-        var movedRover = rover.execute(testCase.command());
-
-        assertThat(movedRover).isNotNull();
-        assertThat(movedRover.direction()).isEqualTo(testCase.direction());
-        assertThat(movedRover.location()).isEqualTo(testCase.expectedLocation());
     }
 
     private record TestCase(Location initialLocation,

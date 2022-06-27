@@ -25,12 +25,13 @@ class RoverCreationTest {
 
     @Test
     void should_not_create_rover_with_null_location() {
+        var roverBuilder = Rover.builder()
+                .withLocation(null)
+                .withDirection(Direction.NORTH);
+
         var thrown = assertThrows(
                 Exception.class,
-                () -> Rover.builder()
-                        .withLocation(null)
-                        .withDirection(Direction.NORTH)
-                        .build(),
+                roverBuilder::build,
                 "An Exception was expected");
 
         assertThat(thrown.getMessage())
@@ -39,12 +40,13 @@ class RoverCreationTest {
 
     @Test
     void should_not_create_rover_with_null_facing_direction() {
+        var roverBuilder = Rover.builder()
+                .withLocation(Location.builder().build())
+                .withDirection(null);
+
         var thrown = assertThrows(
                 Exception.class,
-                () -> Rover.builder()
-                        .withLocation(Location.builder().build())
-                        .withDirection(null)
-                        .build(),
+                roverBuilder::build,
                 "An Exception was expected");
 
         assertThat(thrown.getMessage())

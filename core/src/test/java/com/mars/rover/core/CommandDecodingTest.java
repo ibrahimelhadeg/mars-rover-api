@@ -35,14 +35,6 @@ class CommandDecodingTest {
         );
     }
 
-    private static Stream<NonAllowedTestCase> nonAllowedCommands() {
-        return Stream.of(
-                new NonAllowedTestCase("XLFRB", "X"),
-                new NonAllowedTestCase("R*RffFB", "*"),
-                new NonAllowedTestCase("B\"BB", "\"")
-        );
-    }
-
     @ParameterizedTest
     @MethodSource("nonAllowedCommands")
     void test_failed_decoding_command(NonAllowedTestCase testCase) {
@@ -53,6 +45,14 @@ class CommandDecodingTest {
 
         assertThat(thrown.getMessage())
                 .isEqualTo("\"" + testCase.failingCommand() + "\" is not a known Command code");
+    }
+
+    private static Stream<NonAllowedTestCase> nonAllowedCommands() {
+        return Stream.of(
+                new NonAllowedTestCase("XLFRB", "X"),
+                new NonAllowedTestCase("R*RffFB", "*"),
+                new NonAllowedTestCase("B\"BB", "\"")
+        );
     }
 
     private record AllowedTestCase(String commandCodes,

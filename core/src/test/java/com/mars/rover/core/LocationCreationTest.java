@@ -11,7 +11,7 @@ class LocationCreationTest {
     @Test
     void should_create_location_in_range() {
         int x = 1, y = 1;
-        Location location = Location.builder()
+        var location = Location.builder()
                 .withX(x)
                 .withY(y)
                 .build();

@@ -20,19 +20,6 @@ class RoverTurningTest {
                 .build();
     }
 
-    private static Stream<TestCase> turningCases() {
-        return Stream.of(
-                new TestCase(Direction.NORTH, Direction.WEST, Command.LEFT),
-                new TestCase(Direction.NORTH, Direction.EST, Command.RIGHT),
-                new TestCase(Direction.SOUTH, Direction.EST, Command.LEFT),
-                new TestCase(Direction.SOUTH, Direction.WEST, Command.RIGHT),
-                new TestCase(Direction.WEST, Direction.SOUTH, Command.LEFT),
-                new TestCase(Direction.WEST, Direction.NORTH, Command.RIGHT),
-                new TestCase(Direction.EST, Direction.NORTH, Command.LEFT),
-                new TestCase(Direction.EST, Direction.SOUTH, Command.RIGHT)
-        );
-    }
-
     @ParameterizedTest
     @MethodSource("turningCases")
     void test_turning_situation(TestCase testCase) {
@@ -48,6 +35,19 @@ class RoverTurningTest {
                 .isEqualTo(rover.location());
         assertThat(turnedRover.direction())
                 .isEqualTo(testCase.expectedDirection());
+    }
+
+    private static Stream<TestCase> turningCases() {
+        return Stream.of(
+                new TestCase(Direction.NORTH, Direction.WEST, Command.LEFT),
+                new TestCase(Direction.NORTH, Direction.EST, Command.RIGHT),
+                new TestCase(Direction.SOUTH, Direction.EST, Command.LEFT),
+                new TestCase(Direction.SOUTH, Direction.WEST, Command.RIGHT),
+                new TestCase(Direction.WEST, Direction.SOUTH, Command.LEFT),
+                new TestCase(Direction.WEST, Direction.NORTH, Command.RIGHT),
+                new TestCase(Direction.EST, Direction.NORTH, Command.LEFT),
+                new TestCase(Direction.EST, Direction.SOUTH, Command.RIGHT)
+        );
     }
 
     private record TestCase(Direction initialDirection,

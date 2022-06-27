@@ -15,7 +15,7 @@ class MainTest {
     @Test
     void givenLogsAppendedToList_whenInvokePsvm_thenLogApplicationStarted() {
         final ListAppender<ILoggingEvent> appender = new ListAppender<>();
-        final Logger mainLogger = (Logger) LoggerFactory.getLogger(Main.class);
+        final var mainLogger = (Logger) LoggerFactory.getLogger(Main.class);
         appender.start();
         mainLogger.addAppender(appender);
 
