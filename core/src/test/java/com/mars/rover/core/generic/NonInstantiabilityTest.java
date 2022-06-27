@@ -1,4 +1,4 @@
-package com.mars.rover.core.outsider;
+package com.mars.rover.core.generic;
 
 import java.util.stream.Stream;
 
@@ -14,13 +14,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class NonInstantiabilityTest {
 
-    private static Stream<TestCase> nonInstantiableClasses() {
-        return Stream.of(
-                new TestCase(Main.class),
-                new TestCase(Rover.class)
-        );
-    }
-
     @ParameterizedTest
     @MethodSource("nonInstantiableClasses")
     void test_for_nonInstantiability(TestCase testCase) {
@@ -28,6 +21,13 @@ class NonInstantiabilityTest {
         for (var constructor : constructors) {
             assertThat(isPublic(constructor.getModifiers())).isFalse();
         }
+    }
+
+    private static Stream<TestCase> nonInstantiableClasses() {
+        return Stream.of(
+                new TestCase(Main.class),
+                new TestCase(Rover.class)
+        );
     }
 
     private record TestCase(Class<?> clazz) {
