@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.mars.rover</groupId>
         <artifactId>mars-rover</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
     <packaging>jar</packaging>
@@ -15,8 +15,8 @@
         REST Endpoints to send command using HTTP requests
     </description>
 
-    <artifactId>server</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>api-impl</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
 
     <build>
         <finalName>
@@ -49,7 +49,7 @@
                                         <limit implementation="org.jacoco.report.check.Limit">
                                             <counter>INSTRUCTION</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.95</minimum>
+                                            <minimum>0.9</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
