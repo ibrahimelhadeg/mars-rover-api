@@ -21,9 +21,9 @@
     <properties>
         <mars-rover-core.version>1.0.0-SNAPSHOT</mars-rover-core.version>
 
-        <jax-rs.version>2.1</jax-rs.version>
+        <jax-rs.version>2.1.1</jax-rs.version>
         <swagger.version>2.2.1</swagger.version>
-        <zalando-problem.version>0.27.0</zalando-problem.version>
+        <zalando-problem.version>0.27.1</zalando-problem.version>
 
         <assertj-swagger.version>0.9.0</assertj-swagger.version>
         <swagger-parser.version>2.1.0</swagger-parser.version>

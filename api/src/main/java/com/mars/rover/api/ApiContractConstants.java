@@ -83,10 +83,6 @@ public class ApiContractConstants {
     public static final String JSON_MEDIA_TYPE = "application/json";
     public static final String JSON_PROBLEM_MEDIA_TYPE = "application/problem+json";
 
-    public static final String PROBLEM_SCHEMA_NAME = "Problem";
-    public static final String PROBLEM_SCHEMA_REFERENCE =
-            "https://opensource.zalando.com/restful-api-guidelines/models/problem-1.0.1.yaml#/" + PROBLEM_SCHEMA_NAME;
-
     public static final String TAG_COMMANDER = "commander";
     public static final String TAG_COMMANDER_DESCRIPTION = "Guiding the rover";
 

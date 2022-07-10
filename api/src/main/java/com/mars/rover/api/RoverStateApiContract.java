@@ -12,11 +12,14 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
-import com.mars.rover.api.dto.RoverState;
+import com.mars.rover.api.response.RoverState;
+import com.mars.rover.api.response.RoverStateErrorResponse;
+import com.mars.rover.api.response.RoverStateResponse;
+import com.mars.rover.api.response.RoverStateSuccessResponse;
 
 import static com.mars.rover.api.ApiContractConstants.*;
 import static com.mars.rover.api.RoverStateApiContract.ROVER_STATE_PATH;
-import static com.mars.rover.api.dto.RoverState.ROVER_STATE_SCHEMA_NAME;
+import static com.mars.rover.api.response.RoverState.ROVER_STATE_SCHEMA_NAME;
 
 @Path(ROVER_STATE_PATH)
 @Produces({JSON_MEDIA_TYPE, JSON_PROBLEM_MEDIA_TYPE})
@@ -38,27 +41,27 @@ public interface RoverStateApiContract {
                             description = RESPONSE_OK_DESCRIPTION,
                             content = {@Content(
                                     mediaType = JSON_MEDIA_TYPE,
-                                    schema = @Schema(implementation = RoverState.class))}),
+                                    schema = @Schema(implementation = RoverStateSuccessResponse.class))}),
                     @ApiResponse(
                             responseCode = RESPONSE_UNAUTHORIZED_CODE,
                             description = RESPONSE_UNAUTHORIZED_DESCRIPTION,
                             content = {@Content(
                                     mediaType = JSON_PROBLEM_MEDIA_TYPE,
-                                    schema = @Schema(allOf = {}, ref = PROBLEM_SCHEMA_REFERENCE))}),
+                                    schema = @Schema(implementation = RoverStateErrorResponse.class))}),
                     @ApiResponse(
                             responseCode = RESPONSE_TOO_MANY_REQUESTS_CODE,
                             description = RESPONSE_TOO_MANY_REQUESTS_DESCRIPTION,
                             content = {@Content(
                                     mediaType = JSON_PROBLEM_MEDIA_TYPE,
-                                    schema = @Schema(allOf = {}, ref = PROBLEM_SCHEMA_REFERENCE))}),
+                                    schema = @Schema(implementation = RoverStateErrorResponse.class))}),
                     @ApiResponse(
                             responseCode = RESPONSE_INTERNAL_SERVER_ERROR_CODE,
                             description = RESPONSE_INTERNAL_SERVER_ERROR_DESCRIPTION,
                             content = {@Content(
                                     mediaType = JSON_PROBLEM_MEDIA_TYPE,
-                                    schema = @Schema(allOf = {}, ref = PROBLEM_SCHEMA_REFERENCE))})
+                                    schema = @Schema(implementation = RoverStateErrorResponse.class))})
             })
-    RoverState getRoverState();
+    RoverStateResponse getRoverState();
 
     @POST
     @Operation(
@@ -73,33 +76,33 @@ public interface RoverStateApiContract {
                             description = RESPONSE_ACCEPTED_DESCRIPTION,
                             content = {@Content(
                                     mediaType = JSON_MEDIA_TYPE,
-                                    schema = @Schema(implementation = RoverState.class))}),
+                                    schema = @Schema(implementation = RoverStateSuccessResponse.class))}),
                     @ApiResponse(
                             responseCode = RESPONSE_BAD_REQUEST_CODE,
                             description = RESPONSE_BAD_REQUEST_DESCRIPTION,
                             content = {@Content(
                                     mediaType = JSON_PROBLEM_MEDIA_TYPE,
-                                    schema = @Schema(allOf = {}, ref = PROBLEM_SCHEMA_REFERENCE))}),
+                                    schema = @Schema(implementation = RoverStateErrorResponse.class))}),
                     @ApiResponse(
                             responseCode = RESPONSE_UNAUTHORIZED_CODE,
                             description = RESPONSE_UNAUTHORIZED_DESCRIPTION,
                             content = {@Content(
                                     mediaType = JSON_PROBLEM_MEDIA_TYPE,
-                                    schema = @Schema(allOf = {}, ref = PROBLEM_SCHEMA_REFERENCE))}),
+                                    schema = @Schema(implementation = RoverStateErrorResponse.class))}),
                     @ApiResponse(
                             responseCode = RESPONSE_TOO_MANY_REQUESTS_CODE,
                             description = RESPONSE_TOO_MANY_REQUESTS_DESCRIPTION,
                             content = {@Content(
                                     mediaType = JSON_PROBLEM_MEDIA_TYPE,
-                                    schema = @Schema(allOf = {}, ref = PROBLEM_SCHEMA_REFERENCE))}),
+                                    schema = @Schema(implementation = RoverStateErrorResponse.class))}),
                     @ApiResponse(
                             responseCode = RESPONSE_INTERNAL_SERVER_ERROR_CODE,
                             description = RESPONSE_INTERNAL_SERVER_ERROR_DESCRIPTION,
                             content = {@Content(
                                     mediaType = JSON_PROBLEM_MEDIA_TYPE,
-                                    schema = @Schema(allOf = {}, ref = PROBLEM_SCHEMA_REFERENCE))})
+                                    schema = @Schema(implementation = RoverStateErrorResponse.class))})
             })
-    RoverState updateRoverState(
+    RoverStateResponse updateRoverState(
             @RequestBody(
                     required = true,
                     description = ROVER_STATE_UPDATE_REQUEST_BODY_DESCRIPTION,

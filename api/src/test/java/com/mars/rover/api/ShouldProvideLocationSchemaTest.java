@@ -6,14 +6,14 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import com.mars.rover.api.dto.RoverState;
+import com.mars.rover.api.response.RoverState;
 
 import static io.swagger.v3.parser.util.SchemaTypeUtil.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import static com.mars.rover.api.GeneratedApiContractExtension.getGeneratedApiContract;
-import static com.mars.rover.api.dto.RoverState.Location.LOCATION_SCHEMA_NAME;
+import static com.mars.rover.api.response.RoverState.Location.LOCATION_SCHEMA_NAME;
 
 @ExtendWith(GeneratedApiContractExtension.class)
 class ShouldProvideLocationSchemaTest {

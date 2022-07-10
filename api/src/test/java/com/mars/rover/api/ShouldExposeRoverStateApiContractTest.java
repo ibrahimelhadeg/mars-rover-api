@@ -11,12 +11,18 @@ import static com.mars.rover.api.ApiContractConstants.*;
 import static com.mars.rover.api.ApiContractTestUtil.SCHEMAS_STANDARD_PATH;
 import static com.mars.rover.api.GeneratedApiContractExtension.getGeneratedApiContract;
 import static com.mars.rover.api.RoverStateApiContract.ROVER_STATE_PATH;
-import static com.mars.rover.api.dto.RoverState.ROVER_STATE_SCHEMA_NAME;
+import static com.mars.rover.api.response.RoverState.ROVER_STATE_SCHEMA_NAME;
+import static com.mars.rover.api.response.RoverStateErrorResponse.ROVER_STATE_ERROR_RESPONSE_SCHEMA_NAME;
+import static com.mars.rover.api.response.RoverStateSuccessResponse.ROVER_STATE_SUCCESS_RESPONSE_SCHEMA_NAME;
 
 @ExtendWith(GeneratedApiContractExtension.class)
 class ShouldExposeRoverStateApiContractTest {
 
-    public static final String ROVER_STATE_SCHEMA_PATH = SCHEMAS_STANDARD_PATH + ROVER_STATE_SCHEMA_NAME;
+    public static final String ROVER_STATE_SUCCESS_RESPONSE_SCHEMA_PATH =
+            SCHEMAS_STANDARD_PATH + ROVER_STATE_SUCCESS_RESPONSE_SCHEMA_NAME;
+
+    public static final String ROVER_STATE_ERROR_RESPONSE_SCHEMA_PATH =
+            SCHEMAS_STANDARD_PATH + ROVER_STATE_ERROR_RESPONSE_SCHEMA_NAME;
 
     @Test
     void should_provide_api_endpoints() {
@@ -70,7 +76,7 @@ class ShouldExposeRoverStateApiContractTest {
         check_response_on_get_operation_at_rover_state_endpoint(
                 RESPONSE_OK_CODE,
                 JSON_MEDIA_TYPE,
-                ROVER_STATE_SCHEMA_PATH,
+                ROVER_STATE_SUCCESS_RESPONSE_SCHEMA_PATH,
                 RESPONSE_OK_DESCRIPTION);
     }
 
@@ -79,7 +85,7 @@ class ShouldExposeRoverStateApiContractTest {
         check_response_on_get_operation_at_rover_state_endpoint(
                 RESPONSE_UNAUTHORIZED_CODE,
                 JSON_PROBLEM_MEDIA_TYPE,
-                PROBLEM_SCHEMA_REFERENCE,
+                ROVER_STATE_ERROR_RESPONSE_SCHEMA_PATH,
                 RESPONSE_UNAUTHORIZED_DESCRIPTION);
     }
 
@@ -88,7 +94,7 @@ class ShouldExposeRoverStateApiContractTest {
         check_response_on_get_operation_at_rover_state_endpoint(
                 RESPONSE_TOO_MANY_REQUESTS_CODE,
                 JSON_PROBLEM_MEDIA_TYPE,
-                PROBLEM_SCHEMA_REFERENCE,
+                ROVER_STATE_ERROR_RESPONSE_SCHEMA_PATH,
                 RESPONSE_TOO_MANY_REQUESTS_DESCRIPTION);
     }
 
@@ -97,7 +103,7 @@ class ShouldExposeRoverStateApiContractTest {
         check_response_on_get_operation_at_rover_state_endpoint(
                 RESPONSE_INTERNAL_SERVER_ERROR_CODE,
                 JSON_PROBLEM_MEDIA_TYPE,
-                PROBLEM_SCHEMA_REFERENCE,
+                ROVER_STATE_ERROR_RESPONSE_SCHEMA_PATH,
                 RESPONSE_INTERNAL_SERVER_ERROR_DESCRIPTION);
     }
 
@@ -181,7 +187,7 @@ class ShouldExposeRoverStateApiContractTest {
         check_response_on_post_operation_at_rover_state_endpoint(
                 RESPONSE_ACCEPTED_CODE,
                 JSON_MEDIA_TYPE,
-                ROVER_STATE_SCHEMA_PATH,
+                ROVER_STATE_SUCCESS_RESPONSE_SCHEMA_PATH,
                 RESPONSE_ACCEPTED_DESCRIPTION);
     }
 
@@ -190,7 +196,7 @@ class ShouldExposeRoverStateApiContractTest {
         check_response_on_post_operation_at_rover_state_endpoint(
                 RESPONSE_BAD_REQUEST_CODE,
                 JSON_PROBLEM_MEDIA_TYPE,
-                PROBLEM_SCHEMA_REFERENCE,
+                ROVER_STATE_ERROR_RESPONSE_SCHEMA_PATH,
                 RESPONSE_BAD_REQUEST_DESCRIPTION);
     }
 
@@ -199,7 +205,7 @@ class ShouldExposeRoverStateApiContractTest {
         check_response_on_post_operation_at_rover_state_endpoint(
                 RESPONSE_UNAUTHORIZED_CODE,
                 JSON_PROBLEM_MEDIA_TYPE,
-                PROBLEM_SCHEMA_REFERENCE,
+                ROVER_STATE_ERROR_RESPONSE_SCHEMA_PATH,
                 RESPONSE_UNAUTHORIZED_DESCRIPTION);
     }
 
@@ -208,7 +214,7 @@ class ShouldExposeRoverStateApiContractTest {
         check_response_on_post_operation_at_rover_state_endpoint(
                 RESPONSE_TOO_MANY_REQUESTS_CODE,
                 JSON_PROBLEM_MEDIA_TYPE,
-                PROBLEM_SCHEMA_REFERENCE,
+                ROVER_STATE_ERROR_RESPONSE_SCHEMA_PATH,
                 RESPONSE_TOO_MANY_REQUESTS_DESCRIPTION);
     }
 
@@ -217,7 +223,7 @@ class ShouldExposeRoverStateApiContractTest {
         check_response_on_post_operation_at_rover_state_endpoint(
                 RESPONSE_INTERNAL_SERVER_ERROR_CODE,
                 JSON_PROBLEM_MEDIA_TYPE,
-                PROBLEM_SCHEMA_REFERENCE,
+                ROVER_STATE_ERROR_RESPONSE_SCHEMA_PATH,
                 RESPONSE_INTERNAL_SERVER_ERROR_DESCRIPTION);
     }
 
