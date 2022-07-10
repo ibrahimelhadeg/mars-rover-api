@@ -1,4 +1,4 @@
-package com.mars.rover.core;
+package com.mars.rover.it;
 
 import org.slf4j.LoggerFactory;
 

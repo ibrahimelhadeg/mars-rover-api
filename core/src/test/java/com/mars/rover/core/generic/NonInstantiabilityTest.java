@@ -5,7 +5,6 @@ import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import com.mars.rover.core.Main;
 import com.mars.rover.core.Rover;
 
 import static java.lang.reflect.Modifier.isPublic;
@@ -25,7 +24,6 @@ class NonInstantiabilityTest {
 
     private static Stream<TestCase> nonInstantiableClasses() {
         return Stream.of(
-                new TestCase(Main.class),
                 new TestCase(Rover.class)
         );
     }
