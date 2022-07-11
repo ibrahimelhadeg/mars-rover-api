@@ -35,26 +35,22 @@ class StatusTest {
 
     @Test
     void test_equals() {
-        assertThat(status1).isEqualTo(status2);
-
-        assertThat(status1).isNotEqualTo(status3);
+        assertThat(status1)
+                .isEqualTo(status2)
+                .isNotEqualTo(status3);
     }
 
     @Test
     void test_hashCode() {
         assertThat(status1.hashCode())
-                .isEqualTo(status2.hashCode());
-
-        assertThat(status1.hashCode())
-                .isNotEqualTo(status3.hashCode());
+                .hasSameHashCodeAs(status2.hashCode())
+                .doesNotHaveSameHashCodeAs(status3.hashCode());
     }
 
     @Test
     void test_toString() {
-        assertThat(status1.toString())
-                .isEqualTo(status2.toString());
-
-        assertThat(status1.toString())
-                .isNotEqualTo(status3.toString());
+        assertThat(status1)
+                .hasToString(status2.toString())
+                .doesNotHaveToString(status3.toString());
     }
 }

@@ -5,6 +5,7 @@ import java.io.Serial;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.FieldNameConstants;
+import lombok.extern.jackson.Jacksonized;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -25,6 +26,7 @@ import static io.swagger.v3.parser.util.SchemaTypeUtil.INTEGER_TYPE;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @FieldNameConstants
 
+@Jacksonized
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder(value = {
         RoverState.Fields.DIRECTION,
@@ -61,6 +63,7 @@ public class RoverState {
     @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
     @FieldNameConstants
 
+    @Jacksonized
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonPropertyOrder(value = {
             Location.Fields.X_COORDINATE, Location.Fields.Y_COORDINATE})

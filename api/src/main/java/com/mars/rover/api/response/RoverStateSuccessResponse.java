@@ -5,6 +5,7 @@ import java.io.Serial;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.FieldNameConstants;
+import lombok.extern.jackson.Jacksonized;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -22,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @FieldNameConstants
 
+@Jacksonized
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder(value = {
         RoverStateSuccessResponse.Fields.METADATA,

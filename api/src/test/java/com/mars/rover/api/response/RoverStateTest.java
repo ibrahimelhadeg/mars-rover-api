@@ -48,53 +48,47 @@ class RoverStateTest {
 
     @Test
     void both_empty_roverState_instances_should_be_equal() {
-        assertThat(emptyRoverState1.equals(emptyRoverState2)).isTrue();
+        assertThat(emptyRoverState1).isEqualTo(emptyRoverState2);
     }
 
     @Test
     void should_be_equal() {
-        assertThat(roverState1.equals(roverState2)).isTrue();
+        assertThat(roverState1).isEqualTo(roverState2);
     }
 
     @Test
     void should_not_be_equal() {
-        assertThat(emptyRoverState1.equals(roverState2)).isFalse();
+        assertThat(emptyRoverState1).isNotEqualTo(roverState2);
     }
 
     @Test
     void both_empty_roverState_instances_should_have_the_same_hashCode() {
-        assertThat(emptyRoverState1.hashCode())
-                .isEqualTo(emptyRoverState2.hashCode());
+        assertThat(emptyRoverState1).hasSameHashCodeAs(emptyRoverState2);
     }
 
     @Test
     void both_non_empty_roverState_instances_should_have_the_same_hashCode() {
-        assertThat(roverState1.hashCode())
-                .isEqualTo(roverState2.hashCode());
+        assertThat(roverState1).hasSameHashCodeAs(roverState2);
     }
 
     @Test
     void should_not_have_the_same_hashCode() {
-        assertThat(emptyRoverState1.hashCode())
-                .isNotEqualTo(roverState2.hashCode());
+        assertThat(emptyRoverState1).doesNotHaveSameHashCodeAs(roverState2);
     }
 
     @Test
     void both_empty_roverState_instances_should_have_the_same_toString() {
-        assertThat(emptyRoverState1.toString())
-                .isEqualTo(emptyRoverState2.toString());
+        assertThat(emptyRoverState1).hasToString(emptyRoverState2.toString());
     }
 
     @Test
     void both_non_empty_roverState_instances_should_have_the_same_toString() {
-        assertThat(roverState1.toString())
-                .isEqualTo(roverState2.toString());
+        assertThat(roverState1).hasToString(roverState2.toString());
     }
 
     @Test
     void should_not_have_the_same_toString() {
-        assertThat(emptyRoverState1.toString())
-                .isNotEqualTo(roverState2.toString());
+        assertThat(emptyRoverState1).doesNotHaveToString(roverState2.toString());
     }
 
     @Test

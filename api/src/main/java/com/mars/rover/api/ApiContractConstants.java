@@ -84,27 +84,31 @@ public class ApiContractConstants {
     public static final String JSON_PROBLEM_MEDIA_TYPE = "application/problem+json";
 
     public static final String TAG_COMMANDER = "commander";
-    public static final String TAG_COMMANDER_DESCRIPTION = "Guiding the rover";
+    public static final String TAG_COMMANDER_DESCRIPTION = "Guiding the rover.";
 
     public static final String RESPONSE_ACCEPTED_CODE = "202";
-    public static final String RESPONSE_ACCEPTED_DESCRIPTION = "The rover state update has been taken into account";
+    public static final String RESPONSE_ACCEPTED_DESCRIPTION = "The rover state update has been taken into account.";
     public static final String RESPONSE_BAD_REQUEST_CODE = "400";
-    public static final String RESPONSE_BAD_REQUEST_DESCRIPTION = "Please review your request";
+    public static final String RESPONSE_BAD_REQUEST_DESCRIPTION = "Bad or malformed request.";
     public static final String RESPONSE_OK_CODE = "200";
-    public static final String RESPONSE_OK_DESCRIPTION = "Most recent rover state";
+    public static final String RESPONSE_OK_DESCRIPTION = "Most recent rover state.";
     public static final String RESPONSE_INTERNAL_SERVER_ERROR_CODE = "500";
-    public static final String RESPONSE_INTERNAL_SERVER_ERROR_DESCRIPTION = "Something wrong";
+    public static final String RESPONSE_INTERNAL_SERVER_ERROR_DESCRIPTION = "An unexpected error has occurred..";
     public static final String RESPONSE_TOO_MANY_REQUESTS_CODE = "429";
-    public static final String RESPONSE_TOO_MANY_REQUESTS_DESCRIPTION = "Too many requests";
+    public static final String RESPONSE_TOO_MANY_REQUESTS_DESCRIPTION = "Too many requests.";
     public static final String RESPONSE_UNAUTHORIZED_CODE = "401";
-    public static final String RESPONSE_UNAUTHORIZED_DESCRIPTION = "Unauthorized request";
+    public static final String RESPONSE_UNAUTHORIZED_DESCRIPTION = "Unauthorized request.";
+    public static final String RESPONSE_FORBIDDEN_CODE = "403";
+    public static final String RESPONSE_FORBIDDEN_DESCRIPTION = "Requester is not entitled to perform this action.";
+    public static final String RESPONSE_PRECONDITION_FAILED_CODE = "412";
+    public static final String RESPONSE_PRECONDITION_FAILED_DESCRIPTION = "Rover state update failed, due to validations.";
 
-    public static final String ROVER_STATE_RETRIEVE_OPERATION_DESCRIPTION = "Retrieve the state of the rover: location and direction";
+    public static final String ROVER_STATE_RETRIEVE_OPERATION_DESCRIPTION = "Retrieve the state of the rover: location and direction.";
     public static final String ROVER_STATE_RETRIEVE_OPERATION_ID = "getRoverState";
-    public static final String ROVER_STATE_RETRIEVE_OPERATION_SUMMARY = "Retrieve the rover's state";
+    public static final String ROVER_STATE_RETRIEVE_OPERATION_SUMMARY = "Retrieve the rover's state.";
 
-    public static final String ROVER_STATE_UPDATE_OPERATION_DESCRIPTION = "Update the state of the rover: location, direction, or both";
+    public static final String ROVER_STATE_UPDATE_OPERATION_DESCRIPTION = "Update the state of the rover: location, direction, or both.";
     public static final String ROVER_STATE_UPDATE_OPERATION_ID = "updateRoverState";
-    public static final String ROVER_STATE_UPDATE_OPERATION_SUMMARY = "Update the rover's state";
-    public static final String ROVER_STATE_UPDATE_REQUEST_BODY_DESCRIPTION = "Rover's new state";
+    public static final String ROVER_STATE_UPDATE_OPERATION_SUMMARY = "Update the rover's state.";
+    public static final String ROVER_STATE_UPDATE_REQUEST_BODY_DESCRIPTION = "Rover's new state.";
 }

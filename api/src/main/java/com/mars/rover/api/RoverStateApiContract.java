@@ -1,9 +1,6 @@
 package com.mars.rover.api;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -19,13 +16,12 @@ import com.mars.rover.api.response.RoverStateSuccessResponse;
 
 import static com.mars.rover.api.ApiContractConstants.*;
 import static com.mars.rover.api.RoverStateApiContract.ROVER_STATE_PATH;
-import static com.mars.rover.api.response.RoverState.ROVER_STATE_SCHEMA_NAME;
 
 @Path(ROVER_STATE_PATH)
 @Produces({JSON_MEDIA_TYPE, JSON_PROBLEM_MEDIA_TYPE})
 public interface RoverStateApiContract {
 
-    String ROVER_STATE_RESOURCE_NAME = ROVER_STATE_SCHEMA_NAME + "s";
+    String ROVER_STATE_RESOURCE_NAME = "roverStates";
     String ROVER_STATE_PATH = PATH_SEPARATOR + ROVER_STATE_RESOURCE_NAME;
 
     @GET
@@ -49,6 +45,12 @@ public interface RoverStateApiContract {
                                     mediaType = JSON_PROBLEM_MEDIA_TYPE,
                                     schema = @Schema(implementation = RoverStateErrorResponse.class))}),
                     @ApiResponse(
+                            responseCode = RESPONSE_FORBIDDEN_CODE,
+                            description = RESPONSE_FORBIDDEN_DESCRIPTION,
+                            content = {@Content(
+                                    mediaType = JSON_PROBLEM_MEDIA_TYPE,
+                                    schema = @Schema(implementation = RoverStateErrorResponse.class))}),
+                    @ApiResponse(
                             responseCode = RESPONSE_TOO_MANY_REQUESTS_CODE,
                             description = RESPONSE_TOO_MANY_REQUESTS_DESCRIPTION,
                             content = {@Content(
@@ -64,6 +66,7 @@ public interface RoverStateApiContract {
     RoverStateResponse getRoverState();
 
     @POST
+    @Consumes(JSON_MEDIA_TYPE)
     @Operation(
             tags = TAG_COMMANDER,
             summary = ROVER_STATE_UPDATE_OPERATION_SUMMARY,
@@ -90,6 +93,18 @@ public interface RoverStateApiContract {
                                     mediaType = JSON_PROBLEM_MEDIA_TYPE,
                                     schema = @Schema(implementation = RoverStateErrorResponse.class))}),
                     @ApiResponse(
+                            responseCode = RESPONSE_FORBIDDEN_CODE,
+                            description = RESPONSE_FORBIDDEN_DESCRIPTION,
+                            content = {@Content(
+                                    mediaType = JSON_PROBLEM_MEDIA_TYPE,
+                                    schema = @Schema(implementation = RoverStateErrorResponse.class))}),
+                    @ApiResponse(
+                            responseCode = RESPONSE_PRECONDITION_FAILED_CODE,
+                            description = RESPONSE_PRECONDITION_FAILED_DESCRIPTION,
+                            content = {@Content(
+                                    mediaType = JSON_PROBLEM_MEDIA_TYPE,
+                                    schema = @Schema(implementation = RoverStateErrorResponse.class))}),
+                    @ApiResponse(
                             responseCode = RESPONSE_TOO_MANY_REQUESTS_CODE,
                             description = RESPONSE_TOO_MANY_REQUESTS_DESCRIPTION,
                             content = {@Content(
@@ -102,7 +117,7 @@ public interface RoverStateApiContract {
                                     mediaType = JSON_PROBLEM_MEDIA_TYPE,
                                     schema = @Schema(implementation = RoverStateErrorResponse.class))})
             })
-    RoverStateResponse updateRoverState(
+    RoverStateResponse saveRoverState(
             @RequestBody(
                     required = true,
                     description = ROVER_STATE_UPDATE_REQUEST_BODY_DESCRIPTION,

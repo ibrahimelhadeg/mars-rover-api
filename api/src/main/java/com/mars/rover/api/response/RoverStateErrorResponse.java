@@ -11,16 +11,15 @@ import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.FieldNameConstants;
+import lombok.extern.jackson.Jacksonized;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-
-import org.zalando.problem.AbstractThrowableProblem;
-import org.zalando.problem.StatusType;
-import org.zalando.problem.ThrowableProblem;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import org.zalando.problem.AbstractThrowableProblem;
+import org.zalando.problem.StatusType;
 
 @Getter
 @ToString(callSuper = true)
@@ -30,6 +29,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @FieldNameConstants
 
+@Jacksonized
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder(value = {
         RoverStateSuccessResponse.Fields.METADATA,
@@ -58,10 +58,9 @@ public class RoverStateErrorResponse extends AbstractThrowableProblem implements
                                     StatusType status,
                                     String detail,
                                     URI instance,
-                                    ThrowableProblem cause,
                                     Map<String, Object> parameters,
                                     Metadata metadata) {
-        super(type, title, status, detail, instance, cause, parameters);
+        super(type, title, status, detail, instance, null, parameters);
         this.metadata = metadata;
     }
 
@@ -105,7 +104,6 @@ public class RoverStateErrorResponse extends AbstractThrowableProblem implements
         private StatusType status;
         private String detail;
         private URI instance;
-        private ThrowableProblem cause;
         private Map<String, Object> parameters;
         private Metadata metadata;
 
@@ -134,11 +132,6 @@ public class RoverStateErrorResponse extends AbstractThrowableProblem implements
             return this;
         }
 
-        public RoverStateErrorResponseBuilder withCause(ThrowableProblem cause) {
-            this.cause = cause;
-            return this;
-        }
-
         public RoverStateErrorResponseBuilder withParameters(Map<String, Object> parameters) {
             this.parameters = parameters;
             return this;
@@ -152,7 +145,7 @@ public class RoverStateErrorResponse extends AbstractThrowableProblem implements
         /* Adding validations as part of build() method */
         public RoverStateErrorResponse build() {
             return new RoverStateErrorResponse(
-                    type, title, status, detail, instance, cause, parameters, metadata);
+                    type, title, status, detail, instance, parameters, metadata);
         }
     }
 }

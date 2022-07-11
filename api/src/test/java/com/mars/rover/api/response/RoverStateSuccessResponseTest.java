@@ -27,7 +27,7 @@ class RoverStateSuccessResponseTest {
                                 .build())
                 .build();
 
-        var metadata1 = Metadata.builder()
+        var metadata = Metadata.builder()
                 .withDescription("Description")
                 .withRequestId("requestId")
                 .withRequestTimestamp("requestTimestamp")
@@ -50,7 +50,7 @@ class RoverStateSuccessResponseTest {
 
         roverStateSuccessResponse3 =
                 RoverStateSuccessResponse.builder()
-                        .withMetadata(metadata1)
+                        .withMetadata(metadata)
                         .build();
 
         roverStateSuccessResponse4 =
@@ -61,36 +61,24 @@ class RoverStateSuccessResponseTest {
     @Test
     void test_equals() {
         assertThat(roverStateSuccessResponse1)
-                .isEqualTo(roverStateSuccessResponse2);
-
-        assertThat(roverStateSuccessResponse1)
-                .isNotEqualTo(roverStateSuccessResponse3);
-
-        assertThat(roverStateSuccessResponse1)
+                .isEqualTo(roverStateSuccessResponse2)
+                .isNotEqualTo(roverStateSuccessResponse3)
                 .isNotEqualTo(roverStateSuccessResponse4);
     }
 
     @Test
     void test_hashCode() {
         assertThat(roverStateSuccessResponse1.hashCode())
-                .isEqualTo(roverStateSuccessResponse2.hashCode());
-
-        assertThat(roverStateSuccessResponse1.hashCode())
-                .isNotEqualTo(roverStateSuccessResponse3.hashCode());
-
-        assertThat(roverStateSuccessResponse1.hashCode())
-                .isNotEqualTo(roverStateSuccessResponse4.hashCode());
+                .hasSameHashCodeAs(roverStateSuccessResponse2.hashCode())
+                .doesNotHaveSameHashCodeAs(roverStateSuccessResponse3.hashCode())
+                .doesNotHaveSameHashCodeAs(roverStateSuccessResponse4.hashCode());
     }
 
     @Test
     void test_toString() {
-        assertThat(roverStateSuccessResponse1.toString())
-                .isEqualTo(roverStateSuccessResponse2.toString());
-
-        assertThat(roverStateSuccessResponse1.toString())
-                .isNotEqualTo(roverStateSuccessResponse3.toString());
-
-        assertThat(roverStateSuccessResponse1.toString())
-                .isNotEqualTo(roverStateSuccessResponse4.toString());
+        assertThat(roverStateSuccessResponse1)
+                .hasToString(roverStateSuccessResponse2.toString())
+                .doesNotHaveToString(roverStateSuccessResponse3.toString())
+                .doesNotHaveToString(roverStateSuccessResponse4.toString());
     }
 }

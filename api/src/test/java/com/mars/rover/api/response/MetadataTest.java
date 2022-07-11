@@ -62,28 +62,25 @@ class MetadataTest {
 
     @Test
     void test_equals() {
-        assertThat(metadata1).isEqualTo(metadata2);
-
-        assertThat(metadata1).isNotEqualTo(metadata3);
-
-        assertThat(metadata1).isNotEqualTo(metadata4);
+        assertThat(metadata1)
+                .isEqualTo(metadata2)
+                .isNotEqualTo(metadata3)
+                .isNotEqualTo(metadata4);
     }
 
     @Test
     void test_hashCode() {
-        assertThat(metadata1.hashCode()).isEqualTo(metadata2.hashCode());
-
-        assertThat(metadata1.hashCode()).isNotEqualTo(metadata3.hashCode());
-
-        assertThat(metadata1.hashCode()).isNotEqualTo(metadata4.hashCode());
+        assertThat(metadata1.hashCode())
+                .hasSameHashCodeAs(metadata2.hashCode())
+                .doesNotHaveSameHashCodeAs(metadata3.hashCode())
+                .doesNotHaveSameHashCodeAs(metadata4.hashCode());
     }
 
     @Test
     void test_toString() {
-        assertThat(metadata1.toString()).isEqualTo(metadata2.toString());
-
-        assertThat(metadata1.toString()).isNotEqualTo(metadata3.toString());
-
-        assertThat(metadata1.toString()).isNotEqualTo(metadata4.toString());
+        assertThat(metadata1)
+                .hasToString(metadata2.toString())
+                .doesNotHaveToString(metadata3.toString())
+                .doesNotHaveToString(metadata4.toString());
     }
 }
